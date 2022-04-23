@@ -18,4 +18,4 @@
 
 **GIT**
 
-- [Ссылка на GitHub Pages](https://tanya-osipova.github.io/mesto/)
+- [Ссылка на GitHub Pages]()
