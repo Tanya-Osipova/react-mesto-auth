@@ -1,0 +1,23 @@
+.profile__btn-edit {
+  background: transparent;
+  border: none;
+  background-image: url("../../../images/vector/edit.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  transition: opacity 0.3s linear;
+}
+
+.profile__btn-edit:hover {
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 600px) {
+  .profile__btn-edit {
+    background-image: url("../../../images/vector/mobile-edit.svg");
+    width: 18px;
+    height: 18px;
+  }
+}

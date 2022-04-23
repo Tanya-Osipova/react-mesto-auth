@@ -1,0 +1,14 @@
+.cards__item {
+  position: relative;
+  border-radius: 10px;
+  background: #fff;
+  color: #000;
+  width: 282px;
+  height: 361px;
+}
+
+@media screen and (max-width: 600px) {
+  .cards__item {
+    margin: auto;
+  }
+}

@@ -1,0 +1,28 @@
+.popup__container-btn-close {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  background-image: url("../../../images/vector/close.svg");
+  background-repeat: no-repeat;
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  cursor: pointer;
+  transition: opacity 0.3s linear;
+}
+
+.popup__container-btn-close:hover,
+.popup__container-btn-close:focus {
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 600px) {
+  .popup__container-btn-close {
+    background-image: url("../../../images/vector/mobile-close.svg");
+    width: 20px;
+    height: 20px;
+    top: -38px;
+    right: 0px;
+  }
+}

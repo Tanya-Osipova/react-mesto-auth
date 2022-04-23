@@ -1,0 +1,10 @@
+.profile__image-container {
+  position: relative;
+}
+
+.profile__image-container:hover .profile__update-icon {
+  opacity: 1;
+}
+.profile__image-container:hover .profile__image {
+  opacity: 0.3;
+}

@@ -1,0 +1,57 @@
+/* Vendor */
+
+@import url(./vendor/fonts/fonts.css);
+
+/* Page */
+@import url(./blocks/page/page.css);
+
+/* Popup */
+@import url(./blocks/popup/popup.css);
+@import url(./blocks/popup/_opened/popup_opened.css);
+@import url(./blocks/popup/_image/popup_image.css);
+@import url(./blocks/popup/__container/popup__container.css);
+@import url(./blocks/popup/__container-image/popup__container-image.css);
+@import url(./blocks/popup/__container-content/popup__container-content.css);
+@import url(./blocks/popup/__container-title/popup__container-title.css);
+@import url(./blocks/popup/__container-input/popup__container-input.css);
+@import url(./blocks/popup/__container-input/_type/popup__container-input_type_error.css);
+@import url(./blocks/popup/__container-input-error/popup__container-input-error.css);
+@import url(./blocks/popup/__container-btn-submit/popup__container-btn-submit.css);
+@import url(./blocks/popup/__container-btn-submit/_disabled/container-btn-submit_disabled.css);
+@import url(./blocks/popup/__container-btn-close/popup__container-btn-close.css);
+@import url(./blocks/popup/__container-caption/popup__container-caption.css);
+@import url(./blocks/popup/__container-modal-image/popup__container-modal-image.css);
+
+/* Header */
+@import url(./blocks/header/header.css);
+@import url(./blocks/header/__logo/header__logo.css);
+
+/* Main */
+@import url(./blocks/content/content.css);
+
+/* Profile */
+@import url(./blocks/profile/profile.css);
+@import url(./blocks/profile/__container/profile__container.css);
+@import url(./blocks/profile/__image-container/profile__image-container.css);
+@import url(./blocks/profile/__image/profile__image.css);
+@import url(./blocks/profile/__update-icon/profile__update-icon.css);
+@import url(./blocks/profile/__info/profile__info.css);
+@import url(./blocks/profile/__name/profile__name.css);
+@import url(./blocks/profile/__job/profile__job.css);
+@import url(./blocks/profile/__btn-edit/profile__btn-edit.css);
+@import url(./blocks/profile/__btn-add/profile__btn-add.css);
+
+/* Cards */
+@import url(./blocks/cards/cards.css);
+@import url(./blocks/cards/__list/cards__list.css);
+@import url(./blocks/cards/__item/cards__item.css);
+@import url(./blocks/cards/__image/cards__image.css);
+@import url(./blocks/cards/__info/cards__info.css);
+@import url(./blocks/cards/__title/cards__title.css);
+@import url(./blocks/cards/__btn-like/cards__btn-like.css);
+@import url(./blocks/cards/__btn-like/_active/cards__btn-like_active.css);
+@import url(./blocks/cards/__btn-trash/cards__btn-trash.css);
+
+/* Footer */
+@import url(./blocks/footer/footer.css);
+@import url(./blocks/footer/__copyright/footer__copyright.css);

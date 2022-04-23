@@ -1,0 +1,16 @@
+.cards__btn-like {
+  background: transparent;
+  background-image: url("../../../images/vector/heart.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 22px;
+  height: 19px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s linear;
+}
+
+.cards__btn-like:hover,
+.cards__btn-like:focus {
+  opacity: 0.6;
+}

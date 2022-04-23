@@ -1,0 +1,11 @@
+.popup__container-modal-image {
+  width: 100%;
+  max-height: 75vh;
+  object-fit: cover;
+}
+
+@media screen and (max-width: 600px) {
+  .popup__container-modal-image {
+    height: 299px;
+  }
+}
