@@ -12,7 +12,6 @@ export default class Api {
       }
       throw 'Ошибка запроса'
     }).then((obj) => {
-      console.log(obj);
       return obj;
     })
   }

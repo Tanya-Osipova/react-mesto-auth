@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function ImagePopup(props) {
   return (
-    <div className="popup popup_image">
+    <div className={`popup popup_image ${props.isOpen ? "popup_opened" : ""}`}>
       <figure className="popup__container-image">
         <img className="popup__container-modal-image" src={props.card.link} />
         <figcaption className="popup__container-caption">{props.card.name}</figcaption>

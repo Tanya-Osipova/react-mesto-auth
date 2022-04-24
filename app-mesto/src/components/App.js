@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
-import Popup from './PopupWithForm';
+import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
+import {InputField} from './Form'
 
 export default function App() {
   const [isEditProfilePopupOpen,setIsEditProfilePopupOpen] = useState(false)
@@ -13,77 +14,52 @@ export default function App() {
 
   // Avatar Popup
   function onEditAvatar() {
-    const popup = document.querySelector('.popup_avatar');
     setIsEditAvatarPopupOpen(true);
-    popup.classList.add('popup_opened');
-    return () => {
-      popup.classList.remove('popup_opened');
-      setIsEditAvatarPopupOpen(false);
-    }
   }
   
   // Profile Popup
   function onEditProfile() {
-    const popup = document.querySelector('.popup_edit');
     setIsEditProfilePopupOpen(true);
-    popup.classList.add('popup_opened');
-    return () => {
-      popup.classList.remove('popup_opened');
-      setIsEditProfilePopupOpen(false);
-    }
   }
 
   // Place Popup
   function onAddPlace() {
-    const popup = document.querySelector('.popup_add');
     setIsAddPlacePopupOpen(true);
-    popup.classList.add('popup_opened');
-    return () => {
-      popup.classList.remove('popup_opened');
-      setIsAddPlacePopupOpen(false);
-    }
   }   
 
   // Image Popup
   function handleCardClick(card) {
-    const popup = document.querySelector('.popup_image');
     setSelectedCard(card);
-    popup.classList.add('popup_opened');
-    return () => {
-      popup.classList.remove('popup_opened');
-      setSelectedCard('');
-    }
   } 
 
   // Close All Popups
   function closeAllPopups() {
-    const popup = document.querySelector('.popup_opened');
-    popup.classList.remove('popup_opened');
     setIsAddPlacePopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setSelectedCard({name: '', link: ''})
   }
 
-  // Close Popup on esc key
+  // Close Popup on esc key and click
   useEffect(() => {
+    document.addEventListener("click", handlePopupClick);
     document.addEventListener("keydown", handleEscapeKey);
     return () => {
+      document.removeEventListener("click", handlePopupClick);
       document.removeEventListener("keydown", handleEscapeKey);
-    };
-  }, [handleEscapeKey]);
 
-  function handleEscapeKey(e) {
+    };
+  }, [isEditProfilePopupOpen,isAddPlacePopupOpen,isEditAvatarPopupOpen]);
+
+  function handlePopupClick(e) {
+    if (e.target.classList.contains('popup_opened')) {
+      closeAllPopups()
+    }  
+  }
+   function handleEscapeKey(e) {
     if(e.key === 'Escape') {
       closeAllPopups();
     }   
-  }
-
-  // Close the Popup when the user clicks anywhere outside of it
-  window.onclick = function(event) {
-    if (event.target.classList.contains('popup_opened')) {
-      closeAllPopups()
-    }
   }
 
   return (
@@ -91,10 +67,23 @@ export default function App() {
       <Header />
       <Main onEditProfile={onEditProfile} onAddPlace={onAddPlace} onEditAvatar={onEditAvatar} onClick={handleCardClick} />
       <Footer />
-      <Popup name='edit' title='Редактировать профиль' onClose={closeAllPopups} />
-      <Popup name='add' title='Новое место' onClose={closeAllPopups} />
-      <Popup name='avatar' title='Обновить аватар' onClose={closeAllPopups} />
-      <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+      <PopupWithForm name='edit' title='Редактировать профиль' onClose={closeAllPopups} isOpen={isEditProfilePopupOpen}>
+        <InputField  id="name" value="Жак-Ив Кусто" type="text" maxLength='40' />
+        <span className="name-input-error popup__container-input-error"></span>
+        <InputField  id="job" value="Исследователь океана" type="text" maxLength='40' />
+        <span className="job-input-error popup__container-input-error"></span>
+      </PopupWithForm>
+      <PopupWithForm name='add' title='Новое место' onClose={closeAllPopups} isOpen={isAddPlacePopupOpen}>
+        <InputField  id="img-name" placeholder="Название" type="text" maxLength='30'/>
+        <span className="img-name-input-error popup__container-input-error"></span>
+        <InputField  id="img-link" placeholder="Ссылка на картинку" type="url" maxLength='30'/>
+        <span className="img-link-input-error popup__container-input-error"></span>
+      </PopupWithForm>
+      <PopupWithForm name='avatar' title='Обновить аватар' onClose={closeAllPopups}  isOpen={isEditAvatarPopupOpen}>
+        <InputField  id="avatar-link" placeholder="Ссылка на картинку" type="url" />
+        <span className="avatar-link-input-error popup__container-input-error"></span>
+      </PopupWithForm>
+      <ImagePopup card={selectedCard} onClose={closeAllPopups} isOpen={selectedCard.name !== ''} />
     </div>
   );
 }
