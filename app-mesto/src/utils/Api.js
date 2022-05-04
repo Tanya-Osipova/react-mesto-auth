@@ -85,19 +85,9 @@ export default class Api {
   }
 
   // Like Card
-  likeCard(cardId) {
+  changeLikeCardStatus(cardId,isLiked) {
     const promise = fetch(`${this._url}/cards/${cardId}/likes`, {
-      method: 'PUT',
-      headers: this._headers,
-    });
-
-    return this._makeRequest(promise);
-  }
-
-  // Dislike Card
-  dislikeCard(cardId) {
-    const promise = fetch(`${this._url}/cards/${cardId}/likes`, {
-      method: 'DELETE',
+      method: isLiked ? 'PUT' : 'DELETE',
       headers: this._headers,
     });
 

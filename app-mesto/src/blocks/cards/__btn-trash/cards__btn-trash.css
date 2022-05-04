@@ -19,6 +19,6 @@
   opacity: 0.6;
 }
 
-.cards__btn-trash_show {
+.cards__btn-trash_active {
   display: block;
 }

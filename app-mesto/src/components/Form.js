@@ -1,26 +1,6 @@
 import React from 'react';
 
 export default function Form(props) {
-  let buttonText
-  if(props.name === 'edit' || props.name === 'avatar') {
-    buttonText = 'Сохранить'
-  }
-  if (props.name === 'add') {
-    buttonText = 'Создать'
-  }
-
-
-  function Button(button) {
-    return (
-      <button 
-        className={`popup__container-btn-submit popup__container-btn-submit_${button.name}`} 
-        type="submit" 
-        disabled>
-        {button.text}
-      </button>
-    )
-  }  
-
   return (
     <form 
         className={`popup__container-content popup__container-content_${props.name}`}
@@ -28,26 +8,41 @@ export default function Form(props) {
         method="post" 
         name={props.name}
         noValidate
+        onSubmit={props.onSubmit}        
       >
-        {props.fields}
+        {props.children}
 
-        <Button name={props.name} text={buttonText} />
+        <Button name={props.name} text={props.buttonText} />
       </form>
   )
 }
 
-export function InputField(input) {
+export function InputField({id, value, type, placeholder, maxLength, onChange, reference, ...props}) {
+  return (
+    <input 
+      className="popup__container-input" 
+      id={`${id}-input`}
+      type={type} 
+      name={`${id}-input`}
+      placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+      minLength="2"
+      maxLength={maxLength}
+      required
+      ref={reference}
+      {...props}
+    />
+  )
+}
+
+  function Button(props) {
     return (
-      <input 
-        className="popup__container-input" 
-        id={`${input.id}-input`}
-        type={input.type} 
-        name={`${input.id}-input`}
-        placeholder={input.placeholder}
-        defaultValue={input.value}
-        minLength="2"
-        maxLength={input.maxLength}
-        required
-      />
+      <button 
+        className={`popup__container-btn-submit popup__container-btn-submit_${props.name}`} 
+        type="submit" 
+        >
+        {props.text}
+      </button>
     )
-  }
+  }  
