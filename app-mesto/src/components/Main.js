@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import updateIcon from '../images/vector/update.svg'
-import { api } from '../utils/Api';
 import Card from './Card';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 

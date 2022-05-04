@@ -58,7 +58,7 @@ export default class Api {
         link: card.link
       })
     })
-    
+             
     return this._makeRequest(promise);
   }
 
