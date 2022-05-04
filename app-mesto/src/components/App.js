@@ -16,10 +16,19 @@ export default function App() {
   const [isEditAvatarPopupOpen,setIsEditAvatarPopupOpen] = useState(false)
   const [selectedCard, setSelectedCard] = useState({name: '', link: ''})
   const [currentUser, setCurrentUser] = useState({});
+  const [cards, setCards] = useState([]);
 
   useEffect(() => {
+    // User info
     api.getUserInfo().then((res) => {
       setCurrentUser(res)
+    })
+    .catch(err => {
+      console.log(err); 
+    });
+    // Card
+    api.getCards().then((card) => {
+      setCards(card)
     })
     .catch(err => {
       console.log(err); 
@@ -64,8 +73,6 @@ export default function App() {
     .catch(err => console.log(err))
   }
 
-
-
   // Close All Popups
   function closeAllPopups() {
     setIsAddPlacePopupOpen(false);
@@ -96,11 +103,25 @@ export default function App() {
     }   
   }
 
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    
+    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
+      setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+    });
+  }
+
+  function handleCardDelete(card){
+    api.deleteCard(card._id).then(() => {
+      setCards(cards.filter(f => f._id !== card._id))
+    })
+  }
+
   return (
     <div>
       <CurrentUserContext.Provider value={currentUser}>
         <Header />
-        <Main onEditProfile={onEditProfile} onAddPlace={onAddPlace} onEditAvatar={onEditAvatar} onClick={handleCardClick} />
+        <Main onEditProfile={onEditProfile} onAddPlace={onAddPlace} onEditAvatar={onEditAvatar} onClick={handleCardClick} onCardLike={handleCardLike} onCardDelete={handleCardDelete} cards={cards} />
         <Footer />
 
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} /> 
