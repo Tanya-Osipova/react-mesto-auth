@@ -27,16 +27,23 @@ export default function EditProfilePopup(props) {
   useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
-  }, [currentUser]);
+  }, [currentUser, props.isOpen]);
 
   
   return (
     <div>
-      <PopupWithForm name='edit' title='Редактировать профиль' isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit} buttonText='Сохранить'>
-          <InputField  id="name" type="text" maxLength='40' value={name} onChange={handleName} />
-          <span className="name-input-error popup__container-input-error"></span>
-          <InputField  id="job" type="text" maxLength='40' value={description} onChange={handleDescription} />
-          <span className="job-input-error popup__container-input-error"></span>
+      <PopupWithForm 
+        name='edit' 
+        title='Редактировать профиль' 
+        isOpen={props.isOpen} 
+        onClose={props.onClose} 
+        onSubmit={handleSubmit} 
+        buttonText='Сохранить'
+      >
+        <InputField  id="name" type="text" maxLength='40' value={name || ''} onChange={handleName} />
+        <span className="name-input-error popup__container-input-error"></span>
+        <InputField  id="job" type="text" maxLength='40' value={description || ''} onChange={handleDescription} />
+        <span className="job-input-error popup__container-input-error"></span>
       </PopupWithForm>
     </div>
   );

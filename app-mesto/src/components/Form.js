@@ -3,17 +3,17 @@ import React from 'react';
 export default function Form(props) {
   return (
     <form 
-        className={`popup__container-content popup__container-content_${props.name}`}
-        action="example.php" 
-        method="post" 
-        name={props.name}
-        noValidate
-        onSubmit={props.onSubmit}        
-      >
-        {props.children}
+      className={`popup__container-content popup__container-content_${props.name}`}
+      action="example.php" 
+      method="post" 
+      name={props.name}
+      noValidate
+      onSubmit={props.onSubmit}        
+    >
+      {props.children}
 
-        <Button name={props.name} text={props.buttonText} />
-      </form>
+      <Button name={props.name} text={props.buttonText} />
+    </form>
   )
 }
 

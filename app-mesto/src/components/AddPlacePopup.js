@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PopupWithForm from './PopupWithForm';
 import { InputField } from './Form';
 
 export default function AddPlacePopup(props) {
-  const [name, setName] = React.useState('')
-  const [link, setLink] = React.useState('')
+  const [name, setName] = useState('')
+  const [link, setLink] = useState('')
 
   function handleName(e) {
     setName(e.target.value);
@@ -19,16 +19,38 @@ export default function AddPlacePopup(props) {
     props.onAddPlace({
       name:name, 
       link:link});
-    setName('')
-    setLink('')
   }
+
+  useEffect(() => {
+    setName('');
+    setLink('');
+  }, [props.isOpen]);
 
   return (
     <div>
-      <PopupWithForm name='add' title='Новое место' onClose={props.onClose} isOpen={props.isOpen} onSubmit={handleSubmit} buttonText='Создать'>
-        <InputField  id="img-name" placeholder="Название" type="text" maxLength='30' value={name} onChange={handleName} />
+      <PopupWithForm 
+        name='add' 
+        title='Новое место' 
+        onClose={props.onClose} 
+        isOpen={props.isOpen} 
+        onSubmit={handleSubmit} 
+        buttonText='Создать'
+      >
+        <InputField  
+          id="img-name" 
+          placeholder="Название" 
+          type="text" maxLength='30' 
+          value={name} 
+          onChange={handleName} 
+        />
         <span className="img-name-input-error popup__container-input-error"></span>
-        <InputField  id="img-link" placeholder="Ссылка на картинку" type="url" value={link} onChange={handleLink} />
+        <InputField  
+          id="img-link" 
+          placeholder="Ссылка на картинку" 
+          type="url" 
+          value={link} 
+          onChange={handleLink} 
+        />
         <span className="img-link-input-error popup__container-input-error"></span>
       </PopupWithForm>
     </div>
