@@ -1,0 +1,134 @@
+.register {
+  max-width: 358px;
+  margin: 60px auto 0;
+}
+
+.register__title {
+  margin: 0;
+  color: #FFFFFF;
+  text-align: center;
+  width: 358px;
+  max-width: 100%;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+}
+
+.register__form {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+}
+
+.register__input:first-child {
+  margin-bottom: 30px;
+}
+
+.register__input {
+  max-width: 100%;
+  color: #fff;
+  padding: 0 0 13px 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  border-bottom: 2px solid #CCCCCC;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.register__input::placeholder {
+  color: #CCCCCC;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.register__link {
+  width: 100%;
+  margin-top: 216px;
+  padding: 14px 84px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #000;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  cursor: pointer;
+  transition: .3s linear;
+}
+
+.register__link:hover,
+.register__link:focus {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.register__signin {
+  margin: 15px 0 80px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #fff;
+  width: 358px;
+  max-width: 100%;
+}
+
+.register__signin p {
+  margin: 0 5px 0;
+}
+
+.register__login-link {
+  color: #fff;
+  text-decoration: none;
+  transition: .3s linear;
+}
+
+.register__login-link:hover,
+.register__login-link:focus {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+@media screen and (max-width:600px) {
+  .register {
+    margin-top: 40px;
+    width: calc(100% - 2 * 30px);
+  }
+
+  .register__title {
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  .register__form {
+    margin-top: 40px;
+  }
+
+  .register__link {
+    margin-top: 173px;
+    font-size: 16px;
+    line-height: 19px;
+    padding: 14px 35px;
+  }
+
+  .register__signin {
+    margin: 20px 0 40px 0;
+    display: flex;
+  }
+}
+    

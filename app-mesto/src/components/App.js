@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
+import ProtectedRoute from './ProtectedRoute';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -9,18 +11,28 @@ import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 import DeleteCard from './DeleteCard';
+import Login from './Login';
+import Register from './Register';
+import { useRouteMatch } from 'react-router-dom/cjs/react-router-dom.min';
+import * as userAuth from '../utils/userAuth';
 
-export default function App() {
+function App() {
   const [isEditProfilePopupOpen,setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen,setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen,setIsEditAvatarPopupOpen] = useState(false);
   const [isDeleteCardPopupOpen,setIsDeleteCardPopupOpen] = useState(false);
+  const [isMessagePopupOpen,setIsMessagePopupOpen] = useState(false);
   const [cardToDelete, setCardToDelete] = useState({_id: ''});
   const [selectedCard, setSelectedCard] = useState({name: '', link: ''});
   const [currentUser, setCurrentUser] = useState({});
+  const [currentUserMail, setCurrentUserMail] = useState('');
   const [cards, setCards] = useState([]);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
+    // Check login
+    tokenCheck()
     // User info
     api.getUserInfo().then((res) => {
       setCurrentUser(res)
@@ -36,6 +48,15 @@ export default function App() {
       console.log(err); 
     });
   },[])
+
+  // Redirect after registration/login
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     history.push('/sign-in');
+  //     closeAllPopups();
+  //   }, 5000);
+  //   return () => clearTimeout(timer);
+  // },[isMessagePopupOpen]);
 
   // Avatar Popup
   function onEditAvatar() {
@@ -63,12 +84,18 @@ export default function App() {
     setSelectedCard(card);
   } 
 
+  // Message popup
+  function handleMessagePopup(){
+    setIsMessagePopupOpen(true)
+  }
+
   // Close All Popups
   function closeAllPopups() {
     setIsAddPlacePopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setIsDeleteCardPopupOpen(false);
+    setIsMessagePopupOpen(false)
     setSelectedCard({name: '', link: ''})
   }
 
@@ -142,19 +169,68 @@ export default function App() {
     .catch(err => console.log(err))
   }
 
+  function handleLogin(e) {
+    e.preventDefault();
+    setLoggedIn(true);
+  }
+
+  function tokenCheck () {
+    if (localStorage.getItem('token')) {
+      const token = localStorage.getItem('token');
+      if(token) {
+        userAuth.getContent(token).then((res) => {
+          if(res) {
+            setCurrentUserMail(res.data.email);
+            setLoggedIn(true);
+            history.push('/cards')
+          }
+        })
+      }
+    }
+  }
+
+  function cardsMain() {
+    return (
+      <Main 
+        onEditProfile={onEditProfile} 
+        onAddPlace={onAddPlace} 
+        onEditAvatar={onEditAvatar} 
+        onClick={handleCardClick} 
+        onCardLike={handleCardLike} 
+        onCardDelete={onDeleteCard} 
+        cards={cards} 
+      />
+    )
+  }
+
   return (
     <div>
+     
       <CurrentUserContext.Provider value={currentUser}>
-        <Header />
-        <Main 
-          onEditProfile={onEditProfile} 
-          onAddPlace={onAddPlace} 
-          onEditAvatar={onEditAvatar} 
-          onClick={handleCardClick} 
-          onCardLike={handleCardLike} 
-          onCardDelete={onDeleteCard} 
-          cards={cards} 
-        />
+      <Header user={currentUserMail} />
+        <Switch>
+          <ProtectedRoute loggedIn={loggedIn} path="/cards"
+            component={cardsMain} 
+          />
+          <Route path="/sign-in">
+            <Login handleLogin={handleLogin} 
+              isOpen={isMessagePopupOpen} 
+              onClose={closeAllPopups}
+              onPopupOpen={handleMessagePopup}
+            />
+          </Route>
+          <Route path="/sign-up">
+            <Register 
+              isOpen={isMessagePopupOpen} 
+              onClose={closeAllPopups}
+              onPopupOpen={handleMessagePopup}
+            />
+          </Route>
+          <Route exact path="/">
+            {loggedIn ? <Redirect to="/cards" /> : <Redirect to="/sign-in" />}
+          </Route>
+        </Switch>
+        
         <Footer />
         <EditProfilePopup 
           isOpen={isEditProfilePopupOpen} 
@@ -183,8 +259,9 @@ export default function App() {
           card={cardToDelete}
         />
       </CurrentUserContext.Provider>
+    
     </div>
   );
 }
 
-
+export default App;
