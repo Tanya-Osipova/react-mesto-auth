@@ -7,7 +7,6 @@ export default function Form(props) {
       action="example.php" 
       method="post" 
       name={props.name}
-      noValidate
       onSubmit={props.onSubmit}        
     >
       {props.children}

@@ -36,7 +36,7 @@ class Login extends React.Component {
           password: ''
         } ,() => {
           this.props.handleLogin(e);
-          this.props.history.push('/cards');
+          this.props.history.push('/');
         })
       } else {
           this.setState({

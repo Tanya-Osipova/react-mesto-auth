@@ -33,6 +33,9 @@ function App() {
   useEffect(() => {
     // Check login
     tokenCheck()
+  },[])
+
+  useEffect(() => {
     // User info
     api.getUserInfo().then((res) => {
       setCurrentUser(res)
@@ -47,16 +50,7 @@ function App() {
     .catch(err => {
       console.log(err); 
     });
-  },[])
-
-  // Redirect after registration/login
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     history.push('/sign-in');
-  //     closeAllPopups();
-  //   }, 5000);
-  //   return () => clearTimeout(timer);
-  // },[isMessagePopupOpen]);
+  },[loggedIn])
 
   // Avatar Popup
   function onEditAvatar() {
@@ -182,7 +176,7 @@ function App() {
           if(res) {
             setCurrentUserMail(res.data.email);
             setLoggedIn(true);
-            history.push('/cards')
+            history.push('/')
           }
         })
       }
@@ -205,15 +199,15 @@ function App() {
 
   return (
     <div>
-     
       <CurrentUserContext.Provider value={currentUser}>
-      <Header user={currentUserMail} />
+        <Header user={currentUserMail} />
         <Switch>
-          <ProtectedRoute loggedIn={loggedIn} path="/cards"
+          <ProtectedRoute exact loggedIn={loggedIn} path="/"
             component={cardsMain} 
           />
           <Route path="/sign-in">
-            <Login handleLogin={handleLogin} 
+            <Login 
+              handleLogin={handleLogin} 
               isOpen={isMessagePopupOpen} 
               onClose={closeAllPopups}
               onPopupOpen={handleMessagePopup}
@@ -226,11 +220,10 @@ function App() {
               onPopupOpen={handleMessagePopup}
             />
           </Route>
-          <Route exact path="/">
+          {/* <Route exact path="/">
             {loggedIn ? <Redirect to="/cards" /> : <Redirect to="/sign-in" />}
-          </Route>
+          </Route> */}
         </Switch>
-        
         <Footer />
         <EditProfilePopup 
           isOpen={isEditProfilePopupOpen} 
@@ -259,7 +252,6 @@ function App() {
           card={cardToDelete}
         />
       </CurrentUserContext.Provider>
-    
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { Button } from 'react';
+import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import * as userAuth from '../utils/userAuth';
 import './styles/Register.css';
