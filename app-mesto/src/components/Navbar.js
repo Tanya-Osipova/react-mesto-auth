@@ -15,8 +15,12 @@ export default function Navbar(props) {
         (
           <nav className='nav'>
             <ul className="nav__list">
-              <li><p className="nav__link">{props.user}</p></li>
-              <li><button onClick={signOut} className="nav__button">Выйти</button></li>
+              <li>
+                <p className="nav__link">{props.user}</p>
+              </li>
+              <li>
+                <button onClick={signOut} className="nav__button">Выйти</button>
+              </li>
             </ul>
           </nav>
         )

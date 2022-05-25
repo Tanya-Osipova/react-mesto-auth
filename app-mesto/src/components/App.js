@@ -7,6 +7,7 @@ import Footer from './Footer';
 import ImagePopup from './ImagePopup';
 import { api } from '../utils/Api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import Popup from './Popup';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
@@ -93,29 +94,6 @@ function App() {
     setSelectedCard({name: '', link: ''})
   }
 
-  // Close Popup on esc key and click
-  useEffect(() => {
-    document.addEventListener("click", handlePopupClick);
-    document.addEventListener("keydown", handleEscapeKey);
-    return () => {
-      document.removeEventListener("click", handlePopupClick);
-      document.removeEventListener("keydown", handleEscapeKey);
-
-    };
-  }, [isEditProfilePopupOpen,isAddPlacePopupOpen,isEditAvatarPopupOpen, isDeleteCardPopupOpen]);
-
-  function handlePopupClick(e) {
-    if (e.target.classList.contains('popup_opened')) {
-      closeAllPopups()
-    }  
-  }
-
-  function handleEscapeKey(e) {
-    if(e.key === 'Escape') {
-      closeAllPopups();
-    }   
-  }
-
   // Update user profile
   function handleUpdateUser(user) {
     api.updateProfile(user.name, user.about).then((res) => {
@@ -163,11 +141,13 @@ function App() {
     .catch(err => console.log(err))
   }
 
+  // Login
   function handleLogin(e) {
     e.preventDefault();
     setLoggedIn(true);
   }
 
+  // Check token
   function tokenCheck () {
     if (localStorage.getItem('token')) {
       const token = localStorage.getItem('token');
@@ -220,32 +200,34 @@ function App() {
               onPopupOpen={handleMessagePopup}
             />
           </Route>
-          {/* <Route exact path="/">
-            {loggedIn ? <Redirect to="/cards" /> : <Redirect to="/sign-in" />}
-          </Route> */}
         </Switch>
         <Footer />
-        <EditProfilePopup 
+        <Popup 
+          component={EditProfilePopup} 
           isOpen={isEditProfilePopupOpen} 
           onClose={closeAllPopups} 
           onUpdateUser={handleUpdateUser} 
         /> 
-        <AddPlacePopup 
+        <Popup
+          component={AddPlacePopup} 
           isOpen={isAddPlacePopupOpen} 
           onClose={closeAllPopups} 
           onAddPlace={handleAddPlace} 
         /> 
-        <EditAvatarPopup 
+        <Popup
+          component={EditAvatarPopup} 
           isOpen={isEditAvatarPopupOpen} 
           onClose={closeAllPopups} 
           onUpdateAvatar={handleUpdateAvatar} 
         />
-        <ImagePopup 
+        <Popup
+          component={ImagePopup} 
           card={selectedCard} 
           onClose={closeAllPopups} 
           isOpen={selectedCard.name !== ''} 
         />
-        <DeleteCard 
+        <Popup
+          component={DeleteCard} 
           isOpen={isDeleteCardPopupOpen} 
           onClose={closeAllPopups}  
           onCardDelete={handleCardDelete}
