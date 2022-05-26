@@ -28,7 +28,7 @@ class Login extends React.Component {
       return;
     }
 
-  userAuth.authorize(this.state.email, this.state.password)
+    userAuth.authorize(this.state.email, this.state.password)
     .then((data) => {
       if (data.token){
         this.setState({
