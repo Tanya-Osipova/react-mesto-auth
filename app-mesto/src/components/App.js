@@ -14,7 +14,6 @@ import AddPlacePopup from './AddPlacePopup';
 import DeleteCard from './DeleteCard';
 import Login from './Login';
 import Register from './Register';
-import { useRouteMatch } from 'react-router-dom/cjs/react-router-dom.min';
 import * as userAuth from '../utils/userAuth';
 
 function App() {
@@ -37,6 +36,7 @@ function App() {
   },[])
 
   useEffect(() => {
+    if (!loggedIn) return;
     // User info
     api.getUserInfo().then((res) => {
       setCurrentUser(res)
@@ -51,7 +51,7 @@ function App() {
     .catch(err => {
       console.log(err); 
     });
-  },[loggedIn])
+  }, [loggedIn])
 
   // Avatar Popup
   function onEditAvatar() {
